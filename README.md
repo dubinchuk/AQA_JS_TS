@@ -1,1 +1,1 @@
-# js_hw
+# JavaScript Homeworks
