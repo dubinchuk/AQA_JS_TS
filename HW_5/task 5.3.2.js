@@ -8,9 +8,9 @@ const alphabet = 'abcdefghijklmnopqrstuvwxyz';
 const alphabetLow = alphabet.split('');
 const alphabetUp = alphabet.toUpperCase().split('');
 
-ceasarEncryption('AbC', -1);
-ceasarEncryption('ZzZ', 1);
-ceasarEncryption('JavaScript', -5); // скрипт позволяет осуществлять сдвиг не только на +1 и -1, но до 26 в любую из сторон
+console.log(ceasarEncryption('AbC', -1));
+console.log(ceasarEncryption('ZzZ', 1));
+console.log(ceasarEncryption('JavaScript', -5)); // скрипт позволяет осуществлять сдвиг не только на +1 и -1, но до 26 в любую из сторон
 
 function ceasarEncryption (word, offset) {
     const wordArr = word.split('');
@@ -50,5 +50,5 @@ function ceasarEncryption (word, offset) {
             }
         }
     }
-    console.log(result);
+    return result;
 }
