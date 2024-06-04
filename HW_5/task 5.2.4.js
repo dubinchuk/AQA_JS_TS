@@ -10,8 +10,8 @@ function toCamelCase (sentence) {
         const camelCaseWord = splitWord.join('');
         camelCaseSentence += camelCaseWord;
         if (i == splitSentence.length - 1) {
-            console.log(camelCaseSentence);
+            return camelCaseSentence;
         }
     }
 }
-toCamelCase('I am super engineer');
+console.log(toCamelCase('I am super engineer'));
