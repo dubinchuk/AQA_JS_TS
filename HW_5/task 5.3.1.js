@@ -18,7 +18,7 @@ const checkWord = function (word) {
             countConsonants++;
         } 
     }
-    console.log(`Word ${word} contains ${countVowels} vovels and ${countConsonants} consonants`);
+    return `Word ${word} contains ${countVowels} vovels and ${countConsonants} consonants`;
 }
 
-checkWord('JavaScript');
+console.log(checkWord('JavaScript'));
