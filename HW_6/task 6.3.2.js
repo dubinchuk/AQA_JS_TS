@@ -22,7 +22,7 @@ function letterReplacement(word) {
             i--;
         }
         if (wordArr[i] == wordArr[i + 1]) {
-            replacementLetterIndex = alphabet.indexOf(wordArr[i]) + 1;
+           const replacementLetterIndex = alphabet.indexOf(wordArr[i]) + 1;
             wordArr.splice(i, 2, alphabet[replacementLetterIndex]);
             i--;
         }
