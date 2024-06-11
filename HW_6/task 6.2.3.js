@@ -1,7 +1,7 @@
 // 3. Напишите функцию, которая принимает на вход массив чисел, убирает из него дубликаты и возвращает массив с только уникальными значениями.
 
 function uniqueNumbers(numbers) {
-    if (typeof numbers == 'object') {
+    if (Array.isArray(numbers)) {
         const checkIfNumbers = numbers.find((item) => !(typeof item == 'number' && /^\d+$/.test(item)));
         
         if (!checkIfNumbers) {
@@ -28,7 +28,7 @@ console.log(uniqueNumbers([3, 5, 5, 7, 324, 54, 5, 3, 52525, 4536, 5, 78, 324, 4
 // решение с использованием Spread оператора:
 
 function uniqueNumbers2(numbers) {
-    if (typeof numbers == 'object') {
+    if (Array.isArray(numbers)) {
         const checkIfNumbers = numbers.find((item) => !(typeof item == 'number' && /^\d+$/.test(item)));
         
         if (!checkIfNumbers) {
