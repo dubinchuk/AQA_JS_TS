@@ -19,11 +19,7 @@ function checkPizzas(myPizzas) {
         }
     }
     
-    if (result == '') {
-        return null;
-    } 
-    
-    return result;
+    return result.length ? result : null;
 }
 
 console.log(checkPizzas(['hawai', 'Margarita', '4 cheeses', 'Diablo', 'Superhot', 'Double Mozarella']));
