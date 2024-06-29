@@ -1,3 +1,4 @@
+'use strict'
 // Task 2. Перед вами структура компании, и ниже представлены задания, относящиеся к ней.
 // В заданиях по максимуму использовать методы массивов, создавать функции-помощники, выполняющие дополнительные действия,
 // чтобы ваши функции выполняли строго одну работу. ЭТО ОЧЕНЬ ВАЖНО!
@@ -75,19 +76,27 @@ const enterprises = [
 // Предприятие 3 (нет сотрудников)
 // - Отдел аналитики (нет сотрудников)
 
+const isEndsWithOne = (count) => /.*1$/.test(count) && !/.*11$/.test(count);
+
 const enterpriseStructure = (enterprises) => {
     enterprises.map(enterprise => {
         const totalEmployees = enterprise.departments.reduce((acc, department) => acc + department.employees_count, 0);
-        if (/.*1$/.test(totalEmployees) && !/.*11$/.test(totalEmployees)) {
+        if (isEndsWithOne(totalEmployees)) {
             console.log(`${enterprise.name} (${totalEmployees} сотрудник)`);
+        } 
+        else if (totalEmployees === 0) {
+            console.log(`${enterprise.name} (нет сотрудников)`);
         } else {
-        console.log(`${enterprise.name} (${totalEmployees} сотрудников)`);
+            console.log(`${enterprise.name} (${totalEmployees} сотрудников)`);
         }
         enterprise.departments.map(department => {
-            if (/.*1$/.test(department.employees_count) && !/.*11$/.test(department.employees_count)) {
+            if (isEndsWithOne(department.employees_count)) {
                 console.log(`- ${department.name} (${department.employees_count} сотрудник)`);
+            } 
+            else if (totalEmployees === 0) {
+                console.log(`${department.name} (нет сотрудников)`);
             } else {
-            console.log(`- ${department.name} (${department.employees_count} сотрудников)`);
+                console.log(`- ${department.name} (${department.employees_count} сотрудников)`);
             }
         });
     });
@@ -102,11 +111,11 @@ enterpriseStructure(enterprises);
 // getEnterpriseName("Отдел маркетинга") // Предприятие 2
 
 // Функция-помощник для получения предприятия по id отдела или названию отдела:
-const getEnterpriseByDepartment = (idOrName) => enterprises.filter((enterprise) => enterprise.departments.find((department) => department.id === idOrName || department.name === idOrName));
+const getEnterprisesByDepartment = (idOrName) => enterprises.filter((enterprise) => enterprise.departments.find((department) => department.id === idOrName || department.name === idOrName));
 
 const getEnterpriseName = (idOrName) => {
-  const enterpriseFound = getEnterpriseByDepartment(idOrName);
-  if (enterpriseFound == 0) throw new Error('Нет предприятия с данным id отдела или названием отдела');
+  const enterpriseFound = getEnterprisesByDepartment(idOrName);
+  if (enterpriseFound.length === 0) throw new Error('Нет предприятия с данным id отдела или названием отдела');
   
   return enterpriseFound.map(enterprise => enterprise.name).join(', ');
 }
@@ -121,7 +130,7 @@ console.log(getEnterpriseName("Отдел маркетинга"));
 
 // Функция-помощник для создания нового id
 const newId = () => {
-  ids = [];
+  const ids = [];
   enterprises.forEach((enterprise) => {
     ids.push(enterprise.id);
     ids.push(enterprise.departments.map(department => department.id));
@@ -138,7 +147,7 @@ const addEnterprise = (newEnterprise) => {
     departments: [],
   })
   
-  return JSON.stringify(enterprises);
+  return enterprises;
 }
 
 console.log(addEnterprise('Предприятие 4'));
@@ -149,22 +158,19 @@ console.log(addEnterprise('Предприятие 4'));
 // addDepartment(1, "Название нового отдела")
 
 // Функция-помощник для получения предприятия по id предприятия
-const getEnterpriseById = (id, []) =>
+const getEnterpriseById = (id, enterprises) =>
 enterprises.filter((enterprise) => enterprise.id === id);
 
 const addDepartment = (id, newDepartment) => {
   const enterpriseFound = getEnterpriseById(id, enterprises);
-  if (enterpriseFound != 0) {
-    enterpriseFound[0].departments.push({
-      id: newId(enterprises),
-      name: newDepartment,
-      employees_count: null,
-    });
+  if (enterpriseFound.length === 0) throw new Error('Предприятия с данным id не существует'); 
+  enterpriseFound[0].departments.push({
+    id: newId(),
+    name: newDepartment,
+    employees_count: null,
+  });
     
-    return JSON.stringify(enterprises);
-  }
-  
-  throw new Error('Предприятия с данным id не существует');
+  return enterprises;
 }
 
 console.log(addDepartment(1, "Отдел бездельников"));
@@ -176,10 +182,10 @@ console.log(addDepartment(1, "Отдел бездельников"));
 
 const editEnterprise = (id, newName) => {
   const foundEnterprise = getEnterpriseById(id, enterprises);
-  if (foundEnterprise == 0) throw new Error('Предприятия с данным id не существует');
+  if (foundEnterprise.length === 0) throw new Error('Предприятия с данным id не существует');
   foundEnterprise[0].name = newName;
   
-  return JSON.stringify(enterprises);
+  return enterprises;
 }
 
 console.log(editEnterprise(1, 'ООО "Рога и копыта"'));
@@ -190,7 +196,7 @@ console.log(editEnterprise(1, 'ООО "Рога и копыта"'));
 // editDepartment(7, "Новое название отдела")
 
 // Функция-помощник для получения отдела по id отдела
-const getDepartmentById = (id, []) => {
+const getDepartmentById = (id, enterprises) => {
   let result;
   enterprises.forEach((enterprise) => enterprise.departments.forEach((department) => {
       if (department.id === id) {
@@ -204,18 +210,18 @@ const getDepartmentById = (id, []) => {
 
 const editDepartment = (id, newName) => {
   const foundDepartment = getDepartmentById(id, enterprises);
-  if (foundDepartment == undefined) throw new Error('Отдела с данным id не существует');
+  if (!foundDepartment) throw new Error('Отдела с данным id не существует');
   foundDepartment.name = newName;
   
-  return JSON.stringify(enterprises);
+  return enterprises;
 }
 
 console.log(editDepartment(7, "Новое название отдела"));
 
-// 7. Написать функцию для удаления предприятия. В качестве аргумента принимает id предприятия.
+// // 7. Написать функцию для удаления предприятия. В качестве аргумента принимает id предприятия.
 
-// Пример:
-// deleteEnterprise(1)
+// // Пример:
+// // deleteEnterprise(1)
 
 const deleteEnterprise = (id) => {
   const foundEnterprise = getEnterpriseById(id, enterprises);
@@ -236,16 +242,16 @@ console.log(deleteEnterprise(1));
 
 const deleteDepartment = (id) => {
   if (typeof id != 'number') throw new Error('Введите верные данные');
-  const foundEnterprise = getEnterpriseByDepartment(id);
-  
-  if (foundEnterprise.length === 0) throw new Error('Отдела с данным id не существует');
-  const findObject = foundEnterprise[0].departments.filter(department => department.id === id);
+  const foundEnterprise = getEnterprisesByDepartment(id)[0];
+
+  if (!foundEnterprise) throw new Error('Отдела с данным id не существует');
+  const findObject = foundEnterprise.departments.filter(department => department.id === id);
   
   if (findObject[0].employees_count !== 0) throw new Error('Нельзя удалить отдел с сотрудниками');
-  const findIndexOfDepartment = foundEnterprise[0].departments.indexOf(...findObject);
-  foundEnterprise[0].departments.splice(findIndexOfDepartment, 1);
+  const findIndexOfDepartment = foundEnterprise.departments.indexOf(...findObject);
+  foundEnterprise.departments.splice(findIndexOfDepartment, 1);
   
-  return JSON.stringify(enterprises);
+  return enterprises;
 }
 
 console.log(deleteDepartment(3));
@@ -257,13 +263,16 @@ console.log(deleteDepartment(10));
 // moveEmployees(2, 3)
 
 const moveEmployees = (id1, id2) => {
+  if (typeof id1 != 'number' || typeof id2 != 'number') throw new Error('Введите верные данные');
+  if (getEnterpriseName(id1) !== getEnterpriseName(id2)) throw new Error('Отделы находятся в разных предприятиях');
+  
   const getFromDepartment = getDepartmentById(id1, enterprises);
   const addToDepartment = getDepartmentById(id2, enterprises);
-  
+  if (!getFromDepartment || !addToDepartment) throw new Error('Отдела с данным id не существует');
   addToDepartment.employees_count += getFromDepartment.employees_count;
   getFromDepartment.employees_count = 0;
-  
-  return JSON.stringify(enterprises);
+
+  return enterprises;
 };
 
 console.log(moveEmployees(2, 3));

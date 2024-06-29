@@ -82,7 +82,8 @@ const company = [
   },
 ];
 
-const countUsers = (comp = []) => {
+const countUsers = (comp) => {
+  comp = structuredClone(comp);
   comp.forEach(dept => {
     if (dept.children) {
       const subdeptCount = dept.children.reduce((acc, subdept) => acc + countUsers([subdept])[0].users_count, 0);
@@ -93,13 +94,14 @@ const countUsers = (comp = []) => {
   return comp;
 }
 
-const companyStructure = (comp, indent = '') => {
+const companyStructure = (comp, indent = 0) => {
+  const nestedLevel = ' '.repeat(indent * 4)
   comp.forEach(dept => {
-    result = `${indent}${dept.name} (${dept.users_count} сотрудников)`;
+    const result = `${nestedLevel}${dept.name} (${dept.users_count} сотрудников)`;
     console.log(result);
     
     if (dept.children) {
-      companyStructure(dept.children, indent + '   ');
+      companyStructure(dept.children, indent + 1);
     }
   });
 }
