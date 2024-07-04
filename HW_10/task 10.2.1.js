@@ -4,11 +4,11 @@
 //     Пример: delay(() => console.log('hello'), 2000) // Через 2 секунды в консоли появится слово hello
 
 function callback() {
-    return 'hello';
+    console.log('hello');
 }
 
 function delay(callback, time) {
-    return setTimeout(() => console.log(callback), time);
+    setTimeout(callback, time);
 }
 
-delay(callback(), 2000);
+delay(callback, 2000);
