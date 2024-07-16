@@ -22,13 +22,5 @@ function filter(array: ArrNum, callback: Callback) {
     return result;
 }
 
-const callback1: Callback = function(n) { 
-    return n > 3;
-}
-
-const callback2: Callback = function(n) {
-    return n % 2 === 0;
-}
-
-console.log(filter(numbers, callback1));
-console.log(filter(numbers, callback2));
+console.log(filter(numbers, (n) => n > 3));
+console.log(filter(numbers, (n) => n % 2 === 0));
