@@ -56,8 +56,8 @@ const cart: IShoppingCart = {
         { id: 1, name: "Laptop", price: 1000, quantity: 1 },
         { id: 2, name: "Phone", price: 500, quantity: 2 },
     ],
-    addItem: (item) => cart.items.push(item),
-    removeItem: (id) => {
+    addItem: (item: Item) => cart.items.push(item),
+    removeItem: (id: number) => {
         const index = cart.items.findIndex(item => item.id === id);
         if (index === -1) throw new Error(`id ${id} doesn't exist in the cart`);
         cart.items.splice(index, 1);

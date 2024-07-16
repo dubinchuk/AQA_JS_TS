@@ -10,7 +10,7 @@ interface IEmployee {
     name: string;
     surname: string;
     readonly salary: number;
-    address?: IAddress;
+    address: IAddress;
 }
 
 interface ItEmployee {
@@ -19,7 +19,7 @@ interface ItEmployee {
     readonly salary: number;
     grade: Grade;
     occupation: OCCUPATION;
-    address?: IAddress;
+    address: IAddress;
     projectNames: string[];
 }
 
@@ -73,17 +73,9 @@ function isItEmployee(employee: IEmployee | ItEmployee): employee is ItEmployee 
 
 function getEmployeeInfo(employee: IEmployee | ItEmployee) {
     if (isItEmployee(employee)) {
-        if ('address' in employee) {
             console.log(`Employee ${employee.name} ${employee.surname} works as ${employee.occupation} at ${employee.grade} grade, runs ${employee.projectNames.join(', ')} projects, earns $${employee.salary} and lives at the following address: ${employee.address?.country}, ${employee.address?.street} street, house ${employee.address?.house}, apt ${employee.address?.flat}`);
-        } else {
-            console.log(`Employee ${employee.name} ${employee.surname} works as ${employee.occupation} at ${employee.grade} grade, runs ${employee.projectNames.join(', ')} projects and earns $${employee.salary}`);
-        }
     } else {
-        if ('address' in employee) {
             console.log(`Employee ${employee.name} ${employee.surname} earns $${employee.salary} and lives at this address: ${employee.address?.country}, ${employee.address?.street} street, house ${employee.address?.house}, apt ${employee.address?.flat}`);
-        } else {
-            console.log(`Employee ${employee.name} ${employee.surname} earns $${employee.salary}`);
-        }
     }
 }
 
