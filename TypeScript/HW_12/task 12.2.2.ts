@@ -1,3 +1,4 @@
+export {}
 // 2. Напишите дженерик функцию generateObject, которая принимает массив пар [string, T] 
 //   и возвращает объект, где каждая пара ключ-значение из массива превращается в соответствующую пару ключ-значение в объекте. 
 //   В случае если ключи повторяются, значение в объекте должно быть последним из встречающихся.
@@ -21,7 +22,7 @@ type PairArray<T> = [string, T][];
 
 function generateObject<T>(array: PairArray<T>): object{
   let result: { [key: string]: T} = {}
-  array.forEach(el => result[el[0]] = el[1]);
+  array.forEach(([key, value]) => result[key] = value);
   return result;
 }
 

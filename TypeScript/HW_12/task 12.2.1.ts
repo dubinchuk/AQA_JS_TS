@@ -6,18 +6,21 @@
 //    Пример:
 //    map([1,2,3,4,5], callback) => [0,2,6,12,20]
 
-type MapCallback<T> = (value: T, index: number, array: T[]) => T;
+type MapCallback<T, U> = (element: T, index?: number, array?: T[]) => U;
 
-function map<T>(array: T[], callback: MapCallback<T>): T[] {
-  let result: T[] = [];
+function map<T, U>(array: T[], callback: MapCallback<T, U>): U[] {
+  if (array.length === 0) {
+    throw new Error('Array cannot be empty'); 
+  }
+  const result: U[] = [];
   for (let i = 0; i < array.length; i++) {
     result.push(callback(array[i], i, array));
   }
   return result;
 };
 
-const callback: MapCallback<number> = function(value: number, index: number, array: number[]): number {
-  return value * 2;
+const callback: MapCallback<number, number> = function(element: number, index?: number): number {
+  return element * (index || 0);
 };
 
 const arr = [2, 3, 55, 7];
