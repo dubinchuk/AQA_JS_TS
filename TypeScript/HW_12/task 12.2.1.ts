@@ -6,7 +6,7 @@
 //    Пример:
 //    map([1,2,3,4,5], callback) => [0,2,6,12,20]
 
-type MapCallback<T, U> = (element: T, index: number, array: T[]) => U;
+type MapCallback<T, U> = (element: T, index?: number, array?: T[]) => U;
 
 function map<T, U>(array: T[], callback: MapCallback<T, U>): U[] {
   if (array.length === 0) {
@@ -19,7 +19,7 @@ function map<T, U>(array: T[], callback: MapCallback<T, U>): U[] {
   return result;
 };
 
-const callback: MapCallback<number, number> = function(element: number, index: number): number {
+const callback: MapCallback<number, number> = function(element: number, index?: number): number {
   return element * (index || 0);
 };
 
