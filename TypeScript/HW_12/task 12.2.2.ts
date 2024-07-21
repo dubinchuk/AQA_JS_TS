@@ -21,7 +21,7 @@ type PairArray<T> = [string, T][];
 
 function generateObject<T>(array: PairArray<T>): object{
   let result: { [key: string]: T} = {}
-  array.forEach(el => result[el[0]] = el[1]);
+  array.forEach(([key, value]) => result[key] = value);
   return result;
 }
 

@@ -33,13 +33,13 @@ abstract class Employee implements Person {
         public experienceYears: number
     )
     { 
-        this.getDetails();
+        this.calculateSalary();
     }
 
     getDetails() {
             return this.name;
         }
-    protected abstract calculateSalary(): number;
+    protected abstract calculateSalary(): void;
 
 }
 
@@ -53,12 +53,12 @@ class Manager extends Employee {
     {
         super(name, surname, experienceYears);
     }
-    protected calculateSalary(): number {
-        return this.experienceYears * 500;        
+    protected calculateSalary(): void {
+        this.salary = this.experienceYears * 500;        
     }
     
     getDetails(): string {
-        this.salary = this.calculateSalary();
+        this.calculateSalary();
         return `My name is ${this.name}, I am manager with ${this.experienceYears} years of experience in ${this.prefered} and ${this.salary}$ salary`;
     }
 }
@@ -73,11 +73,11 @@ class Developer extends Employee {
     {
         super(name, surname, experienceYears);
     }
-    protected calculateSalary(): number {
-        return this.experienceYears * 1000;
+    protected calculateSalary(): void {
+        this.salary = this.experienceYears * 1000;
     }
     getDetails(): string {
-        this.salary = this.calculateSalary();
+        this.calculateSalary();
         return `My name is ${this.name}, I am developer with ${this.experienceYears} years of experience in ${this.programmingLanguage} and ${this.salary}$ salary`;
     }
 }
