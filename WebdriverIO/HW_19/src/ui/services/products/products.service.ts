@@ -1,4 +1,5 @@
-import { IProduct, PRODUCT_TOAST_STATUSES } from '../../../data/types/product.types.js';
+import { IProduct } from '../../../data/types/product.types.js';
+import { PRODUCT_TOAST_STATUSES } from '../../../data/types/toastMessages.types.js';
 import { AddNewProductPage } from '../../pages/products/addNewProduct.page.js';
 import { DeleteProductModalPage } from '../../pages/products/deleteProductModal.page.js';
 import { ProductDetailsModalPage } from '../../pages/products/productDetailsModal.page.js';

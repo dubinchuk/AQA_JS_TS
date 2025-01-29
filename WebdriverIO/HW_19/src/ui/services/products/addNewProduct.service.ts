@@ -1,5 +1,6 @@
 import { generateNewProduct } from '../../../data/products/generateProduct.js';
-import { IProduct, PRODUCT_TOAST_STATUSES } from '../../../data/types/product.types.js';
+import { IProduct } from '../../../data/types/product.types.js';
+import { PRODUCT_TOAST_STATUSES } from '../../../data/types/toastMessages.types.js';
 import { AddNewProductPage } from '../../pages/products/addNewProduct.page.js';
 import { ProductsPage } from '../../pages/products/products.page.js';
 import { SalesPortalService } from '../salesPortal.service.js';
