@@ -27,18 +27,21 @@ export class ProductsListService {
 
   async validateCreatedProductByDetails(expectedProduct: IProduct) {
     await this.productsPage.clickOnProductDetails(expectedProduct.name);
-    await this.productDetailsModalPage.waitForSpinnerToHide();
+    await this.productsPage.waitForSpinnerToHide();
+    await this.productDetailsModalPage.waitForOpened();
     await browser.pause(3000);
     const actualProduct = await this.productDetailsModalPage.getCreatedProduct();
     expect(actualProduct).toEqual(expectedProduct);
-
     await this.productDetailsModalPage.clickOnCloseViewDetailsButton();
+    await this.productsPage.waitForOpened();
   }
 
   async deleteProductByName(product: IProduct) {
     await this.productsPage.clickOnDeleteProduct(product.name);
+    await this.deleteProductModalPage.waitForOpened();
     await this.deleteProductModalPage.clickOnDeleteProductButton();
     await this.productsPage.waitForSpinnerToHide();
     await this.salesPortalService.validateNotificationAndClose(PRODUCT_TOAST_STATUSES.DELETED);
+    await this.productsPage.waitForOpened();
   }
 }

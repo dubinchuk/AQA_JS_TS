@@ -1,4 +1,4 @@
-import { SIDE_MENU_MODULES, VIEW_DETAILS_MODULES } from '../../data/types/salesportal.types.js';
+import { SIDE_MENU_MODULES, VIEW_DETAILS_MODULES } from '../../data/types/salesPortal.types.js';
 import { HomePage } from '../pages/home.page.js';
 
 export class HomeService {

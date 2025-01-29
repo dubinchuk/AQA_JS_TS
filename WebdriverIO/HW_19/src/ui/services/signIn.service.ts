@@ -6,6 +6,7 @@ export class SignInService {
 
   async openSignInPage() {
     await this.signInPage.openPage(initialUrl);
+    await this.signInPage.waitForOpened();
   }
 
   async login(credentials?: { login?: string; password?: string }) {
