@@ -1,7 +1,7 @@
 import { ModalPage } from '../modal.page.js';
 
 export class DeleteProductModalPage extends ModalPage {
-  uniqueElement = '//h5[contains(text(),"Delete Product")]';
+  readonly uniqueElement = '//h5[contains(text(),"Delete Product")]';
 
   async clickOnDeleteProductButton() {
     await this.clickOnSubmitButton();

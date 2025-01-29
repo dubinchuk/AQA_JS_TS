@@ -1,13 +1,14 @@
 import { ModalPage } from '../modal.page.js';
 
 export class ProductDetailsModalPage extends ModalPage {
-  uniqueElement = '//h5[contains(text(),"Details")]';
+  readonly uniqueElement = '//h5[contains(text(),"Details")]';
 
-  private readonly 'Name value' = '//*[@id="details-modal-body-container"]/div[1]/p';
-  private readonly 'Amount value' = '//*[@id="details-modal-body-container"]/div[2]/p';
-  private readonly 'Price value' = '//*[@id="details-modal-body-container"]/div[3]/p';
-  private readonly 'Manufacturer value' = '//*[@id="details-modal-body-container"]/div[4]/p';
-  private readonly 'Notes value' = '//*[@id="details-modal-body-container"]/div[6]/p';
+  private readonly 'Value by property name' = (name: string) => `//h6[contains(.,"${name}")]/following::p[1]`;
+  private readonly 'Name value' = `${this['Value by property name']('Name:')}`;
+  private readonly 'Amount value' = `${this['Value by property name']('Amount:')}`;
+  private readonly 'Price value' = `${this['Value by property name']('Price:')}`;
+  private readonly 'Manufacturer value' = `${this['Value by property name']('Manufacturer:')}`;
+  private readonly 'Notes value' = `${this['Value by property name']('Notes:')}`;
 
   async getCreatedProduct() {
     const [name, amount, price, manufacturer, notes] = await Promise.all([

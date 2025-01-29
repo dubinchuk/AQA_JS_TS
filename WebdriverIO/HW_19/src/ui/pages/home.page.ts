@@ -1,7 +1,7 @@
 import { SalesPortalPage } from './salesPortal.page.js';
 
 export class HomePage extends SalesPortalPage {
-  uniqueElement = '//span[contains(@class,"fs-4")][contains(text(),"Sales Portal")]';
+  readonly uniqueElement = '//span[contains(@class,"fs-4")][contains(text(),"Sales Portal")]';
   private readonly 'View Orders button' = '#orders-from-home';
   private readonly 'View Products button' = '#products-from-home';
   private readonly 'View Customers button' = '#customers-from-home';

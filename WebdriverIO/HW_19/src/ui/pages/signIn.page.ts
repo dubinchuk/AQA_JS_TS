@@ -1,7 +1,7 @@
 import { SalesPortalPage } from './salesPortal.page.js';
 
 export class SignInPage extends SalesPortalPage {
-  uniqueElement = '//input[@id="emailinput"]';
+  readonly uniqueElement = '//input[@id="emailinput"]';
   protected readonly emailInput = '#emailinput';
   protected readonly passwordInput = '#passwordinput';
   protected readonly loginButton = 'button.btn-lg';
