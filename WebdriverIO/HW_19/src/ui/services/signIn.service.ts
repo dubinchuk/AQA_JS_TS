@@ -1,11 +1,11 @@
-import { ADMIN_PASSWORD, ADMIN_USERNAME, initialUrl } from '../../config/environment.js';
+import { ADMIN_PASSWORD, ADMIN_USERNAME, BASE_URL } from '../../config/environment.js';
 import { SignInPage } from '../pages/signIn.page.js';
 
 export class SignInService {
   constructor(private signInPage = new SignInPage()) {}
 
   async openSignInPage() {
-    await this.signInPage.openPage(initialUrl);
+    await this.signInPage.openPage(BASE_URL);
     await this.signInPage.waitForOpened();
   }
 

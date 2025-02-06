@@ -5,6 +5,7 @@ import { DeleteProductModalPage } from '../../pages/products/deleteProductModal.
 import { ProductDetailsModalPage } from '../../pages/products/productDetailsModal.page.js';
 import { ProductsPage } from '../../pages/products/products.page.js';
 import { SalesPortalService } from '../salesPortal.service.js';
+import _ from 'lodash';
 
 export class ProductsListService {
   constructor(
@@ -32,7 +33,7 @@ export class ProductsListService {
     await this.productDetailsModalPage.waitForOpened();
     await browser.pause(3000);
     const actualProduct = await this.productDetailsModalPage.getCreatedProduct();
-    expect(actualProduct).toEqual(expectedProduct);
+    expect(_.omit(actualProduct, 'createdOn')).toEqual(expectedProduct);
     await this.productDetailsModalPage.clickOnCloseViewDetailsButton();
     await this.productsPage.waitForOpened();
   }
