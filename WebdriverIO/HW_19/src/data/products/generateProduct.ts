@@ -1,12 +1,15 @@
+import { getRandomEnumValue } from '../../utils/enums/getRandomValue.js';
 import { type IProduct, MANUFACTURERS } from '../types/product.types.js';
+import { faker } from '@faker-js/faker';
 
-export function generateNewProduct() {
+export function generateNewProduct(productData?: Partial<IProduct>) {
   const productToCreate: IProduct = {
-    name: 'Test' + Date.now(),
-    price: 100,
-    amount: 2,
-    notes: 'Test notes',
-    manufacturer: MANUFACTURERS.XIAOMI
+    name: faker.commerce.product() + faker.number.int({ min: 1, max: 100000 }),
+    price: faker.number.int({ min: 1, max: 99999 }),
+    amount: faker.number.int({ min: 0, max: 999 }),
+    notes: faker.commerce.productDescription().slice(0, 250),
+    manufacturer: getRandomEnumValue(MANUFACTURERS),
+    ...productData
   };
   return productToCreate;
 }

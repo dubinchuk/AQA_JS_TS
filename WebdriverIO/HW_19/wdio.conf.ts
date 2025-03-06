@@ -1,5 +1,6 @@
 import type { Options } from '@wdio/types';
 import * as dotenv from 'dotenv';
+import { rimraf } from 'rimraf';
 dotenv.config();
 
 export const config: Options.Testrunner = {
@@ -34,9 +35,12 @@ export const config: Options.Testrunner = {
   //
   specs: [
     // ToDo: define location for spec files here
-    // 'src/ui/tests/**/*.test.ts'
-    'src/ui/tests/products/**/*.test.ts'
+    'src/**/*.test.ts'
   ],
+  suites: {
+    ui: ['./src/ui/tests/**/*.test.ts'],
+    ui_products: ['src/ui/tests/products/**/*.test.ts']
+  },
   // Patterns to exclude.
   exclude: [
     // 'path/to/excluded/files'
@@ -57,7 +61,7 @@ export const config: Options.Testrunner = {
   // and 30 processes will get spawned. The property handles how many capabilities
   // from the same test should run tests.
   //
-  maxInstances: 10,
+  maxInstances: +(process.env.MAX_INSTANCES ?? 1),
   //
   // If you have trouble getting all important capabilities together, check out the
   // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -142,7 +146,17 @@ export const config: Options.Testrunner = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
+  reporters: [
+    [
+      'allure',
+      {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+        disableMochaHooks: false
+      }
+    ]
+  ],
 
   // Options to be passed to Mocha.
   // See the full list at http://mochajs.org/
@@ -164,8 +178,9 @@ export const config: Options.Testrunner = {
    * @param {object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: function (config, capabilities) {
+    rimraf.sync('./allure-results');
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialize specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -203,8 +218,9 @@ export const config: Options.Testrunner = {
    * @param {Array.<String>} specs        List of spec file paths that are to be run
    * @param {object}         browser      instance of created browser/device session
    */
-  // before: function (capabilities, specs) {
-  // },
+  before: async function (capabilities, specs) {
+    await browser.maximizeWindow();
+  },
   /**
    * Runs before a WebdriverIO command gets executed.
    * @param {string} commandName hook command name
@@ -233,8 +249,10 @@ export const config: Options.Testrunner = {
    * Hook that gets executed _after_ a hook within the suite starts (e.g. runs after calling
    * afterEach in Mocha)
    */
+
   // afterHook: function (test, context, { error, result, duration, passed, retries }, hookName) {
   // },
+
   /**
    * Function to be executed after a test (in Mocha/Jasmine only)
    * @param {object}  test             test object

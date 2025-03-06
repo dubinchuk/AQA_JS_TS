@@ -1,12 +1,3 @@
-export enum SIDE_MENU_MODULES {
-  HOME = 'Home',
-  ORDERS = 'Orders',
-  PRODUCTS = 'Products',
-  CUSTOMERS = 'Customers'
-}
+export type SideMenuModules = 'Home' | 'Orders' | 'Products' | 'Customers';
 
-export enum VIEW_DETAILS_MODULES {
-  ORDERS = 'Orders',
-  PRODUCTS = 'Products',
-  CUSTOMERS = 'Customers'
-}
+export type ViewDetailsModules = 'Orders' | 'Products' | 'Customers';

@@ -1,10 +1,11 @@
+import { logStep } from '../../utils/report/decorator.js';
 import { BasePage } from './base.page.js';
 
 export abstract class SalesPortalPage extends BasePage {
-  protected readonly spinner = '.spinner-border';
+  private readonly spinner = '.spinner-border';
   abstract readonly uniqueElement: string;
-  protected readonly toastMessage = '.toast-body';
-  protected readonly closeButton = '.d-flex .btn-close';
+  private readonly 'Toast message' = '.toast-body';
+  private readonly 'Close toast button' = '.d-flex .btn-close';
 
   async waitForOpened() {
     await this.waitForElement(this.uniqueElement);
@@ -15,12 +16,13 @@ export abstract class SalesPortalPage extends BasePage {
   }
 
   async getToastMessage() {
-    const text = await this.getText(this.toastMessage);
+    const text = await this.getText(this['Toast message']);
     return text;
   }
 
+  @logStep('Close toast message')
   async closeToastMessage() {
-    await this.click(this.closeButton);
-    await this.waitForElement(this.toastMessage, 10000, true);
+    await this.click(this['Close toast button']);
+    await this.waitForElement(this['Toast message'], 10000, true);
   }
 }

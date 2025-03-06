@@ -1,17 +1,18 @@
+import { IUserCredentials } from '../../data/types/user.types.js';
 import { SalesPortalPage } from './salesPortal.page.js';
 
 export class SignInPage extends SalesPortalPage {
   readonly uniqueElement = '//input[@id="emailinput"]';
-  protected readonly emailInput = '#emailinput';
-  protected readonly passwordInput = '#passwordinput';
-  protected readonly loginButton = 'button.btn-lg';
+  private readonly 'Email input' = '#emailinput';
+  readonly 'Password input' = '#passwordinput';
+  private readonly 'Login button' = 'button.btn-lg';
 
-  async fillCredentials(credentials?: { login?: string; password?: string }) {
-    credentials?.login && (await this.setValue(this.emailInput, credentials.login));
-    credentials?.password && (await this.setValue(this.passwordInput, credentials.password));
+  async fillCredentials(credentials: IUserCredentials) {
+    credentials.username && (await this.setValue(this['Email input'], credentials.username));
+    credentials.password && (await this.setValue(this['Password input'], credentials.password));
   }
 
   async clickOnLogin() {
-    await this.click(this.loginButton);
+    await this.click(this['Login button']);
   }
 }

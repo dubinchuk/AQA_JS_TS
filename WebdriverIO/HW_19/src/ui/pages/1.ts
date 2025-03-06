@@ -1,7 +1,8 @@
-import { ElementOrSelector } from '../../data/types/selector.types.js';
 import { logAction } from '../../utils/report/decorator.js';
 
 const TIMEOUT_5_SECS = 5000;
+
+type ElementOrSelector = WebdriverIO.Element | string;
 
 function isSelectorString(elementOrSelector: ElementOrSelector): elementOrSelector is string {
   return typeof elementOrSelector === 'string';
@@ -30,7 +31,7 @@ export abstract class BasePage {
     await element.setValue(value);
   }
 
-  protected async getText(locator: string, timeout = TIMEOUT_5_SECS) {
+  protected async getText(locator: ElementOrSelector, timeout = TIMEOUT_5_SECS) {
     const element = await this.waitForElement(locator, timeout);
     return await element.getText();
   }

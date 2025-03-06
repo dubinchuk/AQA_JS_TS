@@ -38,4 +38,13 @@ export class ProductsPage extends SalesPortalPage {
   async clickOnDeleteProduct(product: string) {
     await this.click(this['Delete button by product name'](product));
   }
+
+  async findProductInTable(product: string, reverse = false) {
+    try {
+      await this.waitForElement(this['Table row selector'](product), 2000, reverse);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
