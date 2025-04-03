@@ -17,5 +17,12 @@
     "esModuleInterop": true,
     "experimentalDecorators": true
   },
-  "include": ["src", "wdio.conf.ts"]
+  "include": [
+    "src",
+    "wdio.conf.ts",
+    "../../../../../AQA_course/архивный код/DELETE_signIn.clients.ts",
+    "../../../../../AQA_course/архивный код/DELETE_product.clients.ts",
+    "../../../../../AQA_course/архивный код/DELETE_smoke.test.ts",
+    "../../../../../AQA_course/архивный код/DELETE_baseSignIn.clients.ts"
+  ]
 }
