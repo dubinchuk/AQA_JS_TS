@@ -1,0 +1,19 @@
+{
+  // "cucumberautocomplete.steps": [
+  //   "E:/QA/AQA_course/23 - AQA - BDD с использованием WebdriverIO и Cucumber/cucumber/src/ui/step-definitions/**/*.ts"
+  // ],
+  // "cucumberautocomplete.syncfeatures": "E:/QA/AQA_course/23 - AQA - BDD с использованием WebdriverIO и Cucumber/cucumber/src/ui/features/**/*.feature",
+  "cucumberautocomplete.steps": ["src/ui/step-definitions/**/*.ts"],
+  "cucumberautocomplete.syncfeatures": "src/ui/features/**/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "cucumberautocomplete.strictGherkinValidation": true,
+  "cucumberautocomplete.smartSnippets": true,
+  "cucumberautocomplete.stepsInvariants": true,
+  "cucumberautocomplete.onTypeFormat": true,
+  "editor.quickSuggestions": {
+    "comments": false,
+    "strings": true,
+    "other": true
+  }
+  // "cucumberautocomplete.debug": true
+}
