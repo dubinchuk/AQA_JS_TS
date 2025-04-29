@@ -48,3 +48,7 @@ Then(/^I should see notification contains text '(.*)'$/, async function (text: s
   const actualText = await $('.toast-body').getText();
   await expect(actualText).toContain(text);
 });
+
+Then(/^I wait for '(.*)' seconds$/, async function (delay: number) {
+  await browser.pause(delay * 1000);
+});
