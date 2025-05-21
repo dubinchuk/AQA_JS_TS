@@ -21,35 +21,13 @@ test.describe('[UI] [Customers] Table Sorting', async function () {
     await homeService.openCustomersPage();
   });
 
-  test('Sort by email asc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.EMAIL, 'asc');
-  });
-
-  test('Sort by email desc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.EMAIL, 'desc');
-  });
-
-  test('Sort by name asc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.NAME, 'asc');
-  });
-
-  test('Sort by name desc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.NAME, 'desc');
-  });
-
-  test('Sort by country asc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.COUNTRY, 'asc');
-  });
-
-  test('Sort by country desc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.COUNTRY, 'desc');
-  });
-
-  test('Sort by createdOn asc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.CREATED_ON, 'asc');
-  });
-
-  test('Sort by createdOn desc', async function () {
-    await customersService.sortCustomersAndVerify(CUSTOMERS_COLUMN_NAME.CREATED_ON, 'desc');
-  });
+  const columns = Object.values(CUSTOMERS_COLUMN_NAME);
+  const directions = ['asc', 'desc'];
+  for (const column of columns) {
+    for (const direction of directions) {
+      test(`Sort by '${column}' ${direction}`, async function () {
+        await customersService.sortCustomersAndVerify(column, direction as 'asc' | 'desc');
+      });
+    }
+  }
 });
