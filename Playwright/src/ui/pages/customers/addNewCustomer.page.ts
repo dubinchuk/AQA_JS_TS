@@ -14,6 +14,7 @@ export class AddNewCustomerPage extends SalesPortalPage {
   private readonly 'Phone input' = this.findElement('#inputPhone');
   private readonly 'Notes textarea' = this.findElement('#textareaNotes');
   private readonly 'Save New Customer button' = this.findElement('#save-new-customer');
+  readonly 'Add New Customer form' = this.findElement('#add-new-customer-form');
 
   async fillInputs(customer: Partial<ICustomer>) {
     customer.name && (await this.setValue(this['Name input'], customer.name));

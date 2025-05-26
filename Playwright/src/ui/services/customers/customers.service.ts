@@ -1,7 +1,12 @@
 import { AddNewCustomerPage } from '../../pages/customers/addNewCustomer.page.js';
 import { CustomersListPage } from '../../pages/customers/customers.page.js';
 import { expect, Page } from '@playwright/test';
-import { COUNTRIES, CUSTOMERS_COLUMN_NAME, ICustomersTable } from '../../../data/types/customers.types.js';
+import { COUNTRIES, CUSTOMERS_COLUMN_NAME, ICustomer, ICustomersTable } from '../../../data/types/customers.types.js';
+import { TABLE_MESSAGES } from '../../../data/customers/customersList.js';
+import { TOAST_MESSAGES } from '../../../data/messages/messages.js';
+import _ from 'lodash';
+import { validateToastMessage } from '../../../utils/validation/toastMessage.js';
+import { logStep } from '../../../utils/report/logStep.js';
 
 export class CustomersListService {
   private customersPage: CustomersListPage;
@@ -31,12 +36,14 @@ export class CustomersListService {
     }
   }
 
+  @logStep()
   private async clickToSortColumn(column: CUSTOMERS_COLUMN_NAME, direction: 'asc' | 'desc') {
     let clickCount: 1 | 2;
     direction === 'asc' ? (clickCount = 1) : (clickCount = 2);
     await this.repeatSortAction(() => this.customersPage.clickOnColumnHeaderToSort(column), clickCount);
   }
 
+  @logStep()
   private async getAllCustomersUI() {
     const data = await this.customersPage.getCustomersColumns();
     const customers: ICustomersTable[] = [];
@@ -69,6 +76,7 @@ export class CustomersListService {
     return customers;
   }
 
+  @logStep()
   async sortCustomersAndVerify(column: CUSTOMERS_COLUMN_NAME, direction: 'asc' | 'desc') {
     const key = this.columnKeyMap[column];
     const expectedData = await this.sortCustomersArray(key, direction);
@@ -76,5 +84,22 @@ export class CustomersListService {
 
     const actualData = await this.getAllCustomersUI();
     expect(actualData).toEqual(expectedData);
+  }
+
+  @logStep()
+  async validateToastMessageAndClose(expectedMessage: string) {
+    await validateToastMessage(this.customersPage, expectedMessage);
+    await this.customersPage.closeToastMessage();
+  }
+
+  @logStep()
+  async validateCustomerCreatedMessage() {
+    await this.validateToastMessageAndClose(TOAST_MESSAGES.CUSTOMER.CREATED);
+  }
+
+  @logStep()
+  async validateEmptyTable(message?: string) {
+    const actualMessage = await this.customersPage.getEmptyTableMessage();
+    expect(actualMessage).toEqual(message ?? TABLE_MESSAGES.EMPTY_TABLE);
   }
 }

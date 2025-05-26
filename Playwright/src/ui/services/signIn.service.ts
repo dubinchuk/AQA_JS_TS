@@ -3,6 +3,7 @@ import { ADMIN_PASSWORD, ADMIN_USERNAME } from '../../config/environment';
 import { IUserCredentials } from '../../data/types/user.types.js';
 import { HomePage } from '../pages/home.page.js';
 import { SignInPage } from '../pages/login.page.js';
+import { logStep } from '../../utils/report/logStep.js';
 
 export class SignInService {
   private signInPage: SignInPage;
@@ -12,10 +13,12 @@ export class SignInService {
     this.homePage = new HomePage(page);
   }
 
+  @logStep()
   async openSalesPortal() {
     await this.signInPage.openPage('https://anatoly-karpovich.github.io/aqa-course-project');
   }
 
+  @logStep()
   async login(credentials: IUserCredentials) {
     await this.signInPage.fillCredentialsInputs(credentials);
     await this.signInPage.clickSubmitButton();
@@ -23,7 +26,12 @@ export class SignInService {
     await this.homePage.waitForOpened();
   }
 
+  @logStep()
   async loginAsAdmin() {
     await this.login({ username: ADMIN_USERNAME, password: ADMIN_PASSWORD });
+  }
+
+  async fillInputs(credentials: IUserCredentials) {
+    await this.signInPage.fillCredentialsInputs(credentials);
   }
 }

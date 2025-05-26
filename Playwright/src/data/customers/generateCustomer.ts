@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ICustomer, COUNTRIES } from '../types/customers.types';
+import { ICustomer, COUNTRIES, ICustomerFromResponse } from '../types/customers.types';
 import { getRandromEnumValue } from '../../utils/enums/getRandomValue';
 
 export const generateNewCustomer = (params?: Partial<ICustomer>) => {
@@ -16,3 +16,9 @@ export const generateNewCustomer = (params?: Partial<ICustomer>) => {
     ...params,
   } as ICustomer;
 };
+
+export const generateCustomerFromResponse = (customer?: ICustomer) => ({
+  ...(customer ?? generateNewCustomer()),
+  _id: faker.string.alphanumeric(20),
+  createdOn: faker.date.past().toISOString(),
+});

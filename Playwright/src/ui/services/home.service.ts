@@ -15,4 +15,9 @@ export class HomeService {
     await this.homePage.waitForSpinnerToHide();
     await this.customersPage.waitForOpened();
   }
+
+  async openHomePage() {
+    await this.homePage.openPage('https://anatoly-karpovich.github.io/aqa-course-project');
+    await this.homePage.waitForOpened();
+  }
 }

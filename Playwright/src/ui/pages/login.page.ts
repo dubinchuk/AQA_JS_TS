@@ -7,6 +7,7 @@ export class SignInPage extends SalesPortalPage {
   readonly 'Email input' = this.findElement('#emailinput');
   readonly 'Password input' = this.findElement('#passwordinput');
   readonly 'Login button' = this.findElement('button.btn-primary');
+  readonly 'Login form' = this.findElement('.container-fluid form');
 
   async fillCredentialsInputs(credentials: IUserCredentials) {
     await this.setValue(this['Email input'], credentials.username);

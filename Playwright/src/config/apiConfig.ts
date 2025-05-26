@@ -14,3 +14,8 @@ export const apiConfig = {
     ['Order Comments']: '/api/orders/comments',
   },
 };
+
+export function getCustomersUrlRegex() {
+  const url = `${apiConfig.baseUrl}${apiConfig.endpoints.Customers}`;
+  return new RegExp(`^${url}(\\?.*)?$`);
+}
