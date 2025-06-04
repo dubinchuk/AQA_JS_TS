@@ -1,4 +1,4 @@
-name: Run Playwright UI tests
+name: Run Playwright API tests
 on:
   workflow_dispatch: # Manually trigger the workflow
 jobs:
@@ -14,28 +14,32 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm ci
+        working-directory: playwright
 
-      # Install browsers
+      # Install Playwright browsers
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+        working-directory: playwright
 
-      # Run Playwright UI tests
-      - name: Run Playwright UI tests
+      # Run Playwright API tests
+      - name: Run Playwright API tests
         env:
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_NOTIFICATION_URL }}
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-        run: npm run test:ui
+        run: npm run test:api
+        working-directory: playwright
         continue-on-error: true
 
       # Create Allure report
       - name: Create Allure report
         run: npm run report-create
+        working-directory: playwright
 
-      # Save report into artifacts
+      # Save Allure report
       - name: Save Allure report
         uses: actions/upload-artifact@v2
         with:
-          name: ui-report
-          path: ./allure-report
+          name: api-report
+          path: playwright/allure-report

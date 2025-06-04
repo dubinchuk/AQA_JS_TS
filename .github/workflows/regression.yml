@@ -1,5 +1,9 @@
-name: Run Playwright UI tests
+name: Run Playwright Regression tests
 on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
   workflow_dispatch: # Manually trigger the workflow
 jobs:
   test:
@@ -29,6 +33,16 @@ jobs:
         run: npm run test:ui
         continue-on-error: true
 
+      # Run Playwright API tests
+      - name: Run Playwright API tests
+        env:
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_NOTIFICATION_URL }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+        run: npm run test:api
+        continue-on-error: true
+
       # Create Allure report
       - name: Create Allure report
         run: npm run report-create
@@ -39,3 +53,12 @@ jobs:
         with:
           name: ui-report
           path: ./allure-report
+
+      # Deploy to GitHub Pages
+      - name: Deploy to GitHub Pages
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          destination_dir: allure-report
