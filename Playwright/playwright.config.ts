@@ -7,14 +7,14 @@ dotenv.config();
  * https://github.com/motdotla/dotenv
  */
 // import dotenv from 'dotenv';
-// import path from 'path';
 // dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './src/ui/tests',
+  testDir: process.env.TESTS === 'ui' ? './src/ui/tests' : './src/api/tests',
+  globalTeardown: require.resolve('./src/config/global-teardown.ts'),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -23,13 +23,14 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
+
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: [
     ['html'],
     [
       'allure-playwright',
       {
-        detail: true,
+        // detail: true,
         outputFolder: 'allure-results',
         suiteTitle: false,
       },
@@ -46,19 +47,33 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'], headless: false },
+      name: 'ui',
+      use: {
+        ...devices['Desktop Chrome'],
+        headless: true,
+        storageState: 'src/.auth/user.json',
+      },
+      dependencies: ['setup'],
+      testMatch: /.*\.spec\.ts/,
     },
-
+    {
+      name: 'api',
+      testMatch: /.*\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        headless: true,
+      },
+    },
     // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
+    //   name: "firefox",
+    //   use: { ...devices["Desktop Firefox"], headless: false },
     // },
 
     // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
+    //   name: "webkit",
+    //   use: { ...devices["Desktop Safari"], headless: false },
     // },
 
     /* Test against mobile viewports. */

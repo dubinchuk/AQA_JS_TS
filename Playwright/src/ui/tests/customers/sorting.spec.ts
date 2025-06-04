@@ -17,7 +17,6 @@ test.describe('[UI] [Customers] Table Sorting', async function () {
     customersService = new CustomersListService(page);
     addNewCustomerService = new AddCustomerService(page);
     await signInService.openSalesPortal();
-    await signInService.loginAsAdmin();
     await homeService.openCustomersPage();
   });
 

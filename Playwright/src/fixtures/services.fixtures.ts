@@ -2,6 +2,7 @@ import { AddCustomerService } from '../ui/services/customers/addNewCustomer.serv
 import { CustomersListService } from '../ui/services/customers/customers.service';
 import { HomeService } from '../ui/services/home.service';
 import { SignInService } from '../ui/services/signIn.service';
+import { CustomersApiService } from '../api/services/customers.service';
 import { test as base } from '@playwright/test';
 
 interface ISalesPortalServices {
@@ -9,6 +10,7 @@ interface ISalesPortalServices {
   addNewCustomerPageService: AddCustomerService;
   homePageService: HomeService;
   signInPageService: SignInService;
+  customersApiService: CustomersApiService;
 }
 
 export const test = base.extend<ISalesPortalServices>({
@@ -26,5 +28,9 @@ export const test = base.extend<ISalesPortalServices>({
 
   addNewCustomerPageService: async ({ page }, use) => {
     await use(new AddCustomerService(page));
+  },
+
+  customersApiService: async ({}, use) => {
+    await use(new CustomersApiService());
   },
 });

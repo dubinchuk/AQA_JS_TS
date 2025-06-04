@@ -2,6 +2,7 @@ import { test } from '@playwright/test';
 
 test.describe('[UI] [Login]', async function () {
   test.beforeEach(async function ({ page }) {
+    await page.context().clearCookies();
     await page.goto('https://anatoly-karpovich.github.io/aqa-course-project/');
   });
 

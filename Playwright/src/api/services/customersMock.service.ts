@@ -1,8 +1,7 @@
 import { getCustomersUrlRegex } from '../../config/apiConfig';
 import { CUSTOMER_EXISTS_ERROR_MOCK, TABLE_MOCK } from '../../data/customers/mocks';
-import { STATUS_CODES } from '../../data/types/api.types';
+import { IResponseFields, STATUS_CODES } from '../../data/types/api.types';
 import { ICustomer, ICustomerFromResponse } from '../../data/types/customers.types';
-import { IResponseFields } from '../../data/types/response.types';
 import { Mock } from '../../fixtures/mock.fixtures';
 
 export class CustomersMockService {
@@ -12,11 +11,11 @@ export class CustomersMockService {
 
   async addCustomersToTableMock(customers: ICustomerFromResponse[]) {
     TABLE_MOCK.Customers.push(...customers);
-    await this.mock.route(this.customersUrlAPI, TABLE_MOCK, STATUS_CODES.OK);
+    await this.mock.modifyReponse(this.customersUrlAPI, TABLE_MOCK, STATUS_CODES.OK);
   }
 
   async getMockResponse(url: string | RegExp, mockResponseFields: IResponseFields, status: STATUS_CODES) {
-    await this.mock.route(url, mockResponseFields, status);
+    await this.mock.modifyReponse(url, mockResponseFields, status);
   }
 
   async getCustomerExistsMockResponse(customer: ICustomer | ICustomerFromResponse) {

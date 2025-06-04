@@ -1,6 +1,6 @@
 import { API_ERRORS } from '../errors/apiErrors';
+import { IResponseFields } from '../types/api.types';
 import { ICustomersResponse, ICustomersTableMock } from '../types/customers.types';
-import { IResponseFields } from '../types/response.types';
 
 export const EMPTY_TABLE_MOCK: Omit<ICustomersResponse, 'sorting'> = {
   Customers: [],

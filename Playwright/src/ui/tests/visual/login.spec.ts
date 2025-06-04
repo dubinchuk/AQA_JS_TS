@@ -3,7 +3,8 @@ import { test } from '../../../fixtures/services.fixtures';
 import { SignInPage } from '../../pages/login.page';
 
 test.describe('[UI] [Visual] [Login]', async function () {
-  test.beforeEach(async function ({ signInPageService }) {
+  test.beforeEach(async function ({ signInPageService, page }) {
+    await page.context().clearCookies();
     await signInPageService.openSalesPortal();
   });
 

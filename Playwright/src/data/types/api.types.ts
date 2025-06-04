@@ -1,5 +1,5 @@
 export interface IRequestOptions {
-  baseURL: string;
+  baseURL?: string;
   url: string;
   method: 'get' | 'post' | 'put' | 'delete';
   data?: object;
@@ -9,7 +9,7 @@ export interface IRequestOptions {
 export interface IResponse<T = object> {
   status: number;
   body: T;
-  headers: object;
+  headers: Record<string, string>;
 }
 
 export enum STATUS_CODES {
@@ -18,4 +18,9 @@ export enum STATUS_CODES {
   DELETED = 204,
   INVALID_REQUEST = 400,
   CONFLICT = 409,
+}
+
+export interface IResponseFields {
+  IsSuccess: boolean;
+  ErrorMessage: string | null;
 }

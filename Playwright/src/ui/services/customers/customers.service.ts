@@ -1,7 +1,7 @@
 import { AddNewCustomerPage } from '../../pages/customers/addNewCustomer.page.js';
 import { CustomersListPage } from '../../pages/customers/customers.page.js';
 import { expect, Page } from '@playwright/test';
-import { COUNTRIES, CUSTOMERS_COLUMN_NAME, ICustomer, ICustomersTable } from '../../../data/types/customers.types.js';
+import { COUNTRIES, CUSTOMERS_COLUMN_NAME, ICustomersTable } from '../../../data/types/customers.types.js';
 import { TABLE_MESSAGES } from '../../../data/customers/customersList.js';
 import { TOAST_MESSAGES } from '../../../data/messages/messages.js';
 import _ from 'lodash';

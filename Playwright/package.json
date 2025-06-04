@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test:ui": "npx playwright test",
-    "ui-mode": "npx playwright test --ui",
+    "test:ui": "cross-env TESTS=ui npx playwright test --project=ui",
+    "test:api": "cross-env TESTS=api npx playwright test --project=api",
+    "ui-mode": "cross-env TESTS=ui npx playwright test --ui",
     "report-html-open": "npx playwright show-report",
     "report-create": "allure generate allure-results -o allure-report --clean",
     "report-open": "npm run report-create && allure open allure-report"
@@ -18,12 +19,13 @@
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.15.3",
     "ajv": "^8.17.1",
-    "allure-commandline": "^2.34.0",
-    "allure-playwright": "^3.2.2",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "lodash": "^4.17.21"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.7.0"
+    "@faker-js/faker": "^9.7.0",
+    "allure-commandline": "^2.34.0",
+    "allure-playwright": "^3.2.2"
   }
 }

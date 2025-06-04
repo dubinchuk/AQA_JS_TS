@@ -8,7 +8,6 @@ const test = mergeTests(mockTest, servicesTest);
 test.describe('[UI] [Customers]', async function () {
   test.beforeEach(async function ({ signInPageService }) {
     await signInPageService.openSalesPortal();
-    await signInPageService.loginAsAdmin();
   });
 
   // По условиям задачи нужно создать мок с кастомером, уже существующим в проекте, и завалидировать ошибку.

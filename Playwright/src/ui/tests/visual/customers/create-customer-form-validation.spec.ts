@@ -10,7 +10,6 @@ import { AddNewCustomerPage } from '../../../pages/customers/addNewCustomer.page
 test.describe('[UI] [Visual] [Add new customer form validation]', async function () {
   test.beforeEach(async function ({ signInPageService, homePageService, customersPageService }) {
     await signInPageService.openSalesPortal();
-    await signInPageService.loginAsAdmin();
     await homePageService.openCustomersPage();
     await customersPageService.openAddNewCustomerPage();
   });
