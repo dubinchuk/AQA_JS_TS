@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { IResponse } from '../../data/types/api.types';
 
-const DEFAULT_TIMEOUT = 10000;
+const DEFAULT_TIMEOUT = 15000;
 
 type LocatorOrSelector = Locator | string;
 

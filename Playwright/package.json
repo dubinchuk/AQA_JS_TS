@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test:ui": "cross-env TESTS=ui npx playwright test --project=ui",
-    "test:api": "cross-env TESTS=api npx playwright test --project=api",
-    "ui-mode": "cross-env TESTS=ui npx playwright test --ui",
+    "test:ui": "npm run clean-results && cross-env TESTS=ui npx playwright test --project=ui",
+    "test:api": "npm run clean-results && cross-env TESTS=api npx playwright test --project=api",
+    "ui-mode": "npm run clean-results && cross-env TESTS=ui npx playwright test --ui",
+    "clean-results": "rimraf allure-results",
     "report-html-open": "npx playwright show-report",
     "report-create": "allure generate allure-results -o allure-report --clean",
     "report-open": "npm run report-create && allure open allure-report"
@@ -21,7 +22,8 @@
     "ajv": "^8.17.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "rimraf": "^6.0.1"
   },
   "dependencies": {
     "@faker-js/faker": "^9.7.0",
