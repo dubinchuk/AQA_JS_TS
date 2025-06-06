@@ -1,9 +1,7 @@
 name: Run Playwright Regression tests
 on:
-  push:
-    branches: ['main']
-  pull_request:
-    branches: ['main']
+  schedule:
+    - cron: '0 21 * * *' # 21:00 UTC = 00:00 MSK
   workflow_dispatch: # Manually trigger the workflow
 jobs:
   test:
@@ -25,14 +23,25 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: Playwright
 
-        # Run Playwright UI and API tests
-      - name: Run Playwright UI and API tests
+        # Run Playwright UI testsAdd commentMore actions
+      - name: Run Playwright UI tests
         env:
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_NOTIFICATION_URL }}
           ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
-        run: npm run test
+        run: npm run test:ui
+        working-directory: Playwright
+        continue-on-error: true
+
+      # Run Playwright API tests
+      - name: Run Playwright API tests
+        env:
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          SLACK_NOTIFICATION_URL: ${{ secrets.SLACK_NOTIFICATION_URL }}
+          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+        run: npm run test:api
         working-directory: Playwright
         continue-on-error: true
 
