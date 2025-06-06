@@ -23,7 +23,12 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: Playwright
 
-        # Run Playwright UI testsAdd commentMore actions
+      # Clean tests results
+      - name: Clean previos test results
+        run: npm run clean-results
+        working-directory: Playwright
+
+      # Run Playwright UI tests
       - name: Run Playwright UI tests
         env:
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
