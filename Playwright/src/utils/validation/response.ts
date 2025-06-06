@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 import { IResponse } from '../../data/types/api.types';
-import { IResponseFields } from '../../data/types/response.types';
+import { IResponseFields } from '../../data/types/api.types';
 import { expect } from '@playwright/test';
 
 export function validateSchema<T = object>(response: IResponse<T>, schema: object) {
